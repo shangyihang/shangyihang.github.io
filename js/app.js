@@ -50,19 +50,19 @@ const App = () => {
   let [face, setFace] = useState('./head_pic/user1.jpg');
   let [num, setNum] = useState(30);
   let [faces] = useState([
-    'http://127.0.0.1:5500/test/zhoukao_01/head_pic/user1.jpg',
-    'http://127.0.0.1:5500/test/zhoukao_01/head_pic/user2.jpg',
-    'http://127.0.0.1:5500/test/zhoukao_01/head_pic/user3.jpg',
-    'http://127.0.0.1:5500/test/zhoukao_01/head_pic/user4.jpg',
-    'http://127.0.0.1:5500/test/zhoukao_01/head_pic/user5.jpg',
-    'http://127.0.0.1:5500/test/zhoukao_01/head_pic/user6.jpg',
+    'http://localhost:3001/public/images/user1.jpg',
+    'http://localhost:3001/public/images/user2.jpg',
+    'http://localhost:3001/public/images/user3.jpg',
+    'http://localhost:3001/public/images/user4.jpg',
+    'http://localhost:3001/public/images/user5.jpg',
+    'http://localhost:3001/public/images/user6.jpg',
   ]);
   let [testList, setTestList] = useState([
     {
       id: new Date().getTime(),
-      face: 'http://127.0.0.1:5500/test/zhoukao_01/head_pic/user1.jpg',
+      face: 'http://localhost:3001/public/images/user1.jpg',
       name: '范德萨',
-      content: '年号啊啊啊啊啊啊啊',
+      content: '哇哦你得案例好棒哦',
       status: '1'
     },
     // { id: 2, name: '阿斯顿', content: '规范的个', status: '1' },
