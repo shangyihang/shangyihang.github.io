@@ -5,13 +5,41 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>my test</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Document</title>
 </head>
 
 <body>
-  <h1>
-    test
-  </h1>
+  <div id="app"></div>
+
+  <!-- 引入react核心库 -->
+  <script crossorigin src="./js/react.development.js"></script>
+  <!-- 引入react-dom，用于支持react操作DOM -->
+  <script crossorigin src="./js/react-dom.development.js"></script>
+  <!-- 引入babel，用于将jsx转为js -->
+  <script src="./js/babel.min.js"></script>
+  <!-- 引入主要代码js文件 -->
+  <script src="./js/app.js" type="text/babel"></script>
+<!-- 
+  <script>
+    var name = 'window'
+    const obj = {
+      name: 'obj',
+      sayName: function () {
+        console.log(this.name)
+      },
+    }
+    obj.sayMyName = () => {
+      console.log(this.name)
+    }
+    const fn1 = obj.sayName
+    const fn2 = obj.sayMyName
+    fn1()
+    obj.sayName()
+    fn2()
+    obj.sayMyName()
+
+  </script> -->
 </body>
 
 </html>
