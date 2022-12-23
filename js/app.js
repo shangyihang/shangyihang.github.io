@@ -50,17 +50,17 @@ const App = () => {
   let [face, setFace] = useState('./head_pic/user1.jpg');
   let [num, setNum] = useState(30);
   let [faces] = useState([
-    'http://localhost:3001/public/images/user1.jpg',
-    'http://localhost:3001/public/images/user2.jpg',
-    'http://localhost:3001/public/images/user3.jpg',
-    'http://localhost:3001/public/images/user4.jpg',
-    'http://localhost:3001/public/images/user5.jpg',
-    'http://localhost:3001/public/images/user6.jpg',
+    'http://iwenwiki.com/api/livable/homehot/img_chuwugui.png',
+    'http://iwenwiki.com/api/livable/homehot/img_jingzi.png',
+    'http://iwenwiki.com/api/livable/homehot/img_luodideng.png',
+    'http://iwenwiki.com/api/livable/homehot/img_maojin.png',
+    'http://iwenwiki.com/api/livable/homehot/img_zhaoming.png',
+    'http://iwenwiki.com/api/livable/homehot/img_zhiwujia.png',
   ]);
   let [testList, setTestList] = useState([
     {
       id: new Date().getTime(),
-      face: 'http://localhost:3001/public/images/user1.jpg',
+      face: 'http://iwenwiki.com/api/livable/homehot/img_chuwugui.png',
       name: '范德萨',
       content: '哇哦你得案例好棒哦',
       status: '1'
