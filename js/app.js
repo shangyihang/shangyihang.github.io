@@ -50,7 +50,7 @@ const App = () => {
   let [face, setFace] = useState('');
   let [num, setNum] = useState(30);
   let [faces] = useState([
-    'http://iwenwiki.com/api/livable/homehot/img_chuwugui.png',
+    '../head_pic/user1.jpg',
     'http://iwenwiki.com/api/livable/homehot/img_jingzi.png',
     'http://iwenwiki.com/api/livable/homehot/img_luodideng.png',
     'http://iwenwiki.com/api/livable/homehot/img_maojin.png',
