@@ -51,11 +51,11 @@ const App = () => {
   let [num, setNum] = useState(30);
   let [faces] = useState([
     '../head_pic/user1.jpg',
-    'http://iwenwiki.com/api/livable/homehot/img_jingzi.png',
-    'http://iwenwiki.com/api/livable/homehot/img_luodideng.png',
-    'http://iwenwiki.com/api/livable/homehot/img_maojin.png',
-    'http://iwenwiki.com/api/livable/homehot/img_zhaoming.png',
-    'http://iwenwiki.com/api/livable/homehot/img_zhiwujia.png',
+    '../head_pic/user2.jpg',
+    '../head_pic/user3.jpg',
+    '../head_pic/user4.jpg',
+    '../head_pic/user5.jpg',
+    '../head_pic/user6.jpg',
   ]);
   let [testList, setTestList] = useState([
     {
