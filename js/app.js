@@ -60,7 +60,7 @@ const App = () => {
   let [testList, setTestList] = useState([
     {
       id: new Date().getTime(),
-      face: 'http://iwenwiki.com/api/livable/homehot/img_chuwugui.png',
+      face: '../head_pic/user1.jpg',
       name: '范德萨',
       content: '哇哦你得案例好棒哦',
       status: '1'
@@ -75,7 +75,9 @@ const App = () => {
   function clickFace(e) {
     // e.target.nodeName 获取点击的dom标签名；
     if (e.target.nodeName == 'IMG') {
+      console.log(e.target.src);
       setFace(e.target.src)
+
     }
   }
 
@@ -143,9 +145,14 @@ const App = () => {
           <div className="label">头像：</div>
           <div className="right" onClick={(e) => { clickFace(e) }}>
             {
-              faces.map(item => (
-                <img key={item} className={face == item ? 'on' : ''} src={item} />
-              ))
+              faces.map(item => {
+                let d = item.split('/');
+                let length = d.length;
+                return (
+                  <img key={item} className={d[length - 1] == face.split('/')[face.split('/').length - 1] ? 'on' : ''} src={item} />
+                )
+              }
+              )
             }
           </div>
         </div>
@@ -158,13 +165,13 @@ const App = () => {
         <div className="content">
           <div className="label">内容：</div>
           <div className="right">
-            <textarea 
-            ref={inputContent} 
-            maxLength='30' 
-            onChange={changeNum} 
-            onCompositionStart={(e)=> {numActive = true}} 
-            onCompositionEnd={(e)=>{numActive = false;handleChangeContent(e)}}
-            placeholder="请输入内容" />
+            <textarea
+              ref={inputContent}
+              maxLength='30'
+              onChange={changeNum}
+              onCompositionStart={(e) => { numActive = true }}
+              onCompositionEnd={(e) => { numActive = false; handleChangeContent(e) }}
+              placeholder="请输入内容" />
             <h6>你还可以输入{num}个字！</h6>
           </div>
         </div>
