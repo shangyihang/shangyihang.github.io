@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 引入样式文件 -->
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/vant/2.12.19/index.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- 引入 Vue 和 Vant 的 JS 文件 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.5.20/vue.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vant/2.12.19/vant.min.js"></script>
+    <title>Tabs Page</title>
+    <style>
+      .button-group {
+        position: fixed;
+        top: 50px;
+        left: 20px;
+      }
+      .button {
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="button-group">
+        <van-button class="button" type="primary" @click="addTab"
+          >显示Tabs</van-button
+        >
+        <van-button class="button" type="danger" @click="removeTab"
+          >隐藏Tabs</van-button
+        >
+      </div>
+      <van-tabs v-model="activeTab" ref="tabs" v-show="tabShow">
+        <template v-for="(tab, index) in tabs" :title="tab.title">
+          <van-tab v-if="tab.isShow" :title="tab.title" :key="tab.id"></van-tab>
+        </template>
+      </van-tabs>
+
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <b>当前数量（{{tabs.filter(i=>i.isShow).length}}）</b>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        watch: {
+          tabs: function (val) {
+             this.tabShow = false;
+          },
+        },
+        data() {
+          return {
+            tabShow:true,
+            activeTab: 0,
+            tabs: [
+              { id: 1, title: "Tab 1", isShow: true },
+              { id: 2, title: "Tab 2", isShow: true },
+              { id: 3, title: "Tab 3", isShow: true },
+              { id: 4, title: "Tab 4", isShow: true },
+              { id: 5, title: "Tab 5", isShow: true },
+              { id: 6, title: "Tab 6", isShow: true },
+              { id: 7, title: "Tab 7", isShow: true },
+              { id: 8, title: "Tab 8", isShow: true },
+              { id: 9, title: "Tab 9", isShow: true },
+              { id: 10, title: "Tab 10", isShow: true },
+              { id: 11, title: "Tab 11", isShow: true },
+              { id: 12, title: "Tab 12", isShow: true },
+              { id: 13, title: "Tab 13", isShow: true },
+              { id: 14, title: "Tab 14", isShow: true },
+              { id: 15, title: "Tab 15", isShow: true },
+              { id: 16, title: "Tab 16", isShow: true },
+              { id: 17, title: "Tab 17", isShow: true },
+              { id: 18, title: "Tab 18", isShow: true },
+              { id: 19, title: "Tab 19", isShow: true },
+              { id: 20, title: "Tab 20", isShow: true },
+            ],
+          };
+        },
+        methods: {
+          addTab() {
+            [12,13,14,17].forEach((i)=>{
+              this.updateTabShow(i, false)
+            })
+            this.updateView()
+          },
+          removeTab() {
+            [12,13,14,17].forEach((i)=>{
+              this.updateTabShow(i, true)
+            })
+            this.updateView()
+          },
+          updateTabShow(index, isHide) {
+            this.$set(this.tabs, index, {
+              ...this.tabs[index],
+              isShow: !isHide,
+            });
+          },
+          updateView(){
+            this.$nextTick(()=>{
+              this.tabShow = true;
+              this.$refs.tabs.resize();
+            })
+          }
+        },
+      });
+    </script>
+  </body>
+</html>
