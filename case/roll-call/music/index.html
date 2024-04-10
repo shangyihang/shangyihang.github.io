@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>无损生活 - 全网无损音乐免费下载，音乐搜索,音乐在线试听,下载,在线解析网</title>
+    <meta charset="UTF-8">
+    <meta name=description content=全网音乐免费下载网多站合一音乐搜索解决方案，可搜索试听免费下载网易云音乐、QQ音乐、酷狗音乐、酷我音乐、虾米音乐、百度音乐、一听音乐、咪咕音乐、荔枝FM、蜻蜓FM、喜马拉雅FM、全民K歌、5sing原创翻唱音乐、SoundCloud。>
+    <meta name=keywords content=音乐搜索,音乐免费下载,无损音乐搜索器,音乐试听,音乐在线听,网易云音乐,QQ音乐,酷狗音乐,酷我音乐,虾米音乐,百度音乐,一听音乐,咪咕音乐,荔枝FM,蜻蜓FM,喜马拉雅FM,全民K歌,5sing原创翻唱音乐,SoundCloud音乐在线试听,下载,在线解析网>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href=./favicon.png rel=icon>
+    <script>
+    // 跳转提示
+    if (is_weixn_qq()) {;
+        window.location.href = 'https://c.pc.qq.com/middle.html?pfurl='+window.location.href; 
+    }
+    function is_weixn_qq(){
+        // 判断当前是否微信/QQ浏览器
+        var ua = navigator.userAgent;
+        var isWeixin = !!/MicroMessenger/i.test(ua);
+        var isQQ = !!/QQ\//i.test(ua);
+        if(isWeixin||isQQ){
+            return true;
+        }
+        return false;
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.9/lib/index.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui@2.11.1/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="style.min.css?ver=2020082104">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.9/lib/vant.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/element-ui@2.11.1/lib/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qs@6.9.4/dist/qs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?cf1ff2cf5722661e365bd1127960e994";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header>
+            <div class="header-content">
+                <van-nav-bar :border="false">
+                    <template #left>
+                        <el-image src="./logo.png"></el-image>
+                    </template>
+                    <template #right>
+                        <div class="info">
+                            <span class="header-icon" @click="handleUnlock"><i class="el-icon-key"></i></span>
+                            <span class="header-icon"><i class="el-icon-question" :size="24"></i></span></div>
+                    </template>
+                </van-nav-bar>
+            </div>
+        </el-header>
+
+        <van-row class="notice-content">
+            <van-notice-bar left-icon="volume-o" @click="joinGroup" color="#000000" background="#FFFFFF" text="感谢您的访问,本站完全免费，从未在任何地方出售，请悉知！点击加入Q群：907695252"></van-notice-bar>
+        </van-row>
+
+        <van-row class="search-content">
+            <div class="main-search">
+                <el-input placeholder="请输入你要搜索的音乐、歌手、专辑" v-model="keyword" @keyup.enter="search" @keyup.enter.native="search" class="el-input el-input-group el-input-group--append ">
+                    <el-select v-model="type" slot="prepend" placeholder="请选择">
+                        <el-option label="小 Q" value="tencent"></el-option>
+                        <el-option label="小我" value="kuwo"></el-option>
+                        <el-option label="小狗" value="kugou"></el-option>
+                        <el-option label="小咕" value="migu"></el-option>
+                        <el-option label="小度" value="baidu"></el-option>
+                    </el-select>
+                    <el-button slot="append" icon="el-icon-search" @click="search" @keyup.enter="search"></el-button>
+                </el-input>
+            </div>
+        </van-row>
+        <div class="player-content">
+            <div id="player"></div>
+        </div>
+        <el-main>
+            <p><template>搜索结果</template></p>
+            <div class="main-content" v-loading="searchLoading">
+                <div class="search-result">
+                    <van-list v-model="searchLoading" :finished="finished" finished-text="没有更多了" @load="loadData">
+                        <div v-for="(item,key) in list" :key="key" class="text item">
+                            <div class="search-result-item">
+                                <div class="search-result-item-avatar">
+                                    <el-avatar :size="60" :src="item.picUrl"></el-avatar>
+                                </div>
+                                <div class="search-result-item-content">
+                                    <div class="search-result-item-main-title">
+                                        <p>
+                                            <span><template>{{item.name}}</template></span>
+                                            <van-tag v-if="item.hasSQ" type="warning"><template>SQ</template></van-tag>
+                                            <van-tag v-if="item.hasHQ" type="success"><template>HQ</template></van-tag>
+                                            <template><i v-if="item.id===currentPlay.id&&item.platform === currentPlay.platform" class="el-icon-location-information"></i></template>
+                                        </p>
+                                    </div>
+                                    <div class="search-result-item-main-subtitle">
+                                        <p>
+                                            <template v-if="item.albumName && item.albumName.trim().length>0">《{{item.albumName}}》 - </template>
+                                            <template v-for="(singer,index) in item.singers">{{singer}}&nbsp;</template>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="search-result-item-actions">
+                                    <el-button type="primary" size="mini" icon="el-icon-video-play" @click="handlePlay(item)" circle></el-button>
+                                    <el-button type="success" size="mini" icon="el-icon-download" circle @click="handleDownload(item)"></el-button>
+                                </div>
+                                </el-row>
+                            </div>
+                        </div>
+                    </van-list>
+                </div>
+            </div>
+        </el-main>
+        <el-footer>
+            <p><template>Copyright © 2020 无损生活 保留版权所有 | 技术支持 - </template><a href="https://www.6yit.com/" target="_blank"><template>六音软件</template></a></p>
+        </el-footer>
+    </el-container>
+    <!-- 选择音质-->
+    <van-popup class="popup-content" :lock-scroll="false" closeable :close-on-click-overlay="false" v-model="dlVisible" v-loading="dlLoading">
+        <div class="popup-content-title"><template>请选择下载音质</template></div>
+        <van-radio-group v-model="quality">
+            <van-radio class="popup-content-radio-item" name="128"><template>普通音质</template></van-radio>
+            <van-radio class="popup-content-radio-item" v-if="currentItem.hasHQ" name="320"><template>极高音质</template></van-radio>
+            <van-radio class="popup-content-radio-item" v-if="currentItem.hasSQ" name="flac"><template>无损音质</template></van-radio>
+        </van-radio-group>
+        <div class="popup-content-btn">
+            <el-button type="primary" @click="handleUrl"><template>确定</template></el-button>
+        </div>
+    </van-popup>
+    <!-- 下载地址-->
+    <van-popup class="popup-content" :lock-scroll="false" closeable :close-on-click-overlay="false" v-model="dlInfoVisible">
+        <div class="popup-content-title"><template>下载提示</template></div>
+        <div class="popup-content-dl-info">
+            <div class="popup-content-dl-info-title"><template>{{this.dlInfo.title}}&nbsp;<el-tag  effect="dark" :hit="false" size="mini" @click="copy()"><template>点我复制</template></el-tag></template></div>
+            <div class="popup-content-dl-info-url"><a :download="this.dlInfo.title" :href="dlInfo.url" target="_blank"><template>右键链接另存为或者点击我</template></a></div>
+        </div>
+    </van-popup>
+    <van-popup class="popup-content" :lock-scroll="false" closeable :close-on-click-overlay="false" v-model="verifyVisible" v-loading="unlockLoading" >
+        <div class="popup-content-title"><template>人工验证提示</template></div>
+        <div class="verify-image">
+            <van-image src="./code.jpg" show-loading fit="cover" :width="240" :height="240">
+                <template v-slot:loading>
+                    <van-loading type="spinner" size="30" />
+                </template>
+            </van-image>
+            <template>
+                <div class="verify-image-info">微信公众号：【黑话君】</div>
+            </template>
+        </div>
+        <div class="verify-desc">
+            <template><div class="verify-desc-item"><van-tag type="danger">1.</van-tag> 微信扫描上方二维码或搜索【黑话君】</div></template>
+            <template><div class="verify-desc-item"><van-tag type="warning">2.</van-tag> 公众号中发送【音乐密码】，获取解锁码</div></template>
+            <template><div class="verify-desc-item"><van-tag type="primary">3.</van-tag> 填入下方解锁，解锁码有效时间为12小时</div></template>
+        </div>
+        <div class="verify-code">
+            <el-input
+                    placeholder="请输入解锁码"
+                    v-model="unlockCode"
+                    clearable>
+            </el-input>
+        </div>
+        <div class="popup-content-btn">
+            <el-button @click="verifyVisible=false"><template>取 消</template></el-button>
+            <el-button type="primary" @click="handleUnlockSubmit"><template>确 定</template></el-button>
+        </div>
+    </van-popup>
+</div>
+</body>
+<script src="main.min.js?ver=202308261643"></script>
+</html>
